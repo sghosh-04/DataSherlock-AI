@@ -1,10 +1,11 @@
 import pandas as pd
 import numpy as np
 from typing import Dict, Any, List
+from pandas.api.types import is_numeric_dtype
 
 class DashboardArchitectAgent:
     def generate_dashboard(self, df: pd.DataFrame) -> List[Dict[str, Any]]:
-        if len(df) == 0:
+        if df.empty or len(df.columns) == 0:
             return []
 
         # 1. Classify columns
@@ -25,7 +26,7 @@ class DashboardArchitectAgent:
                 continue
                 
             # Check if numeric (metric)
-            if np.issubdtype(non_null_series.dtype, np.number):
+            if is_numeric_dtype(non_null_series):
                 # If unique counts are very low, it might be a categorical ID, else it's a metric
                 if non_null_series.nunique() > 10 or col_lower in ["revenue", "sales", "price", "amount", "profit", "cost", "quantity", "rating"]:
                     metrics.append(col)
@@ -38,12 +39,12 @@ class DashboardArchitectAgent:
         # Fallbacks if classification yields empty arrays
         if not metrics:
             # Pick first float/int column
-            num_cols = [c for c in df.columns if np.issubdtype(df[c].dtype, np.number)]
+            num_cols = [c for c in df.columns if is_numeric_dtype(df[c])]
             metrics = num_cols[:2] if num_cols else [df.columns[0]]
             
         if not dimensions:
             # Pick first object column
-            obj_cols = [c for c in df.columns if str(df[c].dtype) == "object"]
+            obj_cols = [c for c in df.columns if not is_numeric_dtype(df[c])]
             dimensions = obj_cols[:2] if obj_cols else [df.columns[-1]]
 
         widgets = []
@@ -51,6 +52,8 @@ class DashboardArchitectAgent:
 
         # A. Generate KPI widgets for top 2 metrics
         for metric in metrics[:2]:
+            if metric not in df.columns:
+                continue
             try:
                 avg_val = df[metric].mean()
                 sum_val = df[metric].sum()
