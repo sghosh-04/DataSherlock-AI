@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Send, Loader2, Bot, User, CheckCircle, BarChart3 } from "lucide-react";
+import { API_BASE_URL } from "@/lib/api";
 import { 
   ResponsiveContainer, 
   BarChart, 
@@ -69,7 +70,7 @@ export default function BiAnalystChat({ datasetId }: BiAnalystChatProps) {
     setLoading(true);
 
     try {
-      const res = await fetch(`http://localhost:8000/api/copilot/${datasetId}/bi-analyst`, {
+      const res = await fetch(`${API_BASE_URL}/api/copilot/${datasetId}/bi-analyst`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

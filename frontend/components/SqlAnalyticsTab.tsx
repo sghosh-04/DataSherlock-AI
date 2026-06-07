@@ -13,6 +13,7 @@ import {
   BookOpen,
   Info
 } from "lucide-react";
+import { API_BASE_URL } from "@/lib/api";
 
 interface SqlAnalyticsTabProps {
   datasetId: string;
@@ -40,7 +41,7 @@ export default function SqlAnalyticsTab({ datasetId, columns }: SqlAnalyticsTabP
     setSuccess("");
 
     try {
-      const res = await fetch(`http://localhost:8000/api/datasets/${datasetId}/sql/translate`, {
+      const res = await fetch(`${API_BASE_URL}/api/datasets/${datasetId}/sql/translate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: nlpPrompt })
@@ -70,7 +71,7 @@ export default function SqlAnalyticsTab({ datasetId, columns }: SqlAnalyticsTabP
     setResults(null);
 
     try {
-      const res = await fetch(`http://localhost:8000/api/datasets/${datasetId}/sql`, {
+      const res = await fetch(`${API_BASE_URL}/api/datasets/${datasetId}/sql`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: query })

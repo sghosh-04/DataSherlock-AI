@@ -24,6 +24,7 @@ import ReportsExportsTab from "@/components/ReportsExportsTab";
 import HealthCopilot from "@/components/HealthCopilot";
 import BiAnalystChat from "@/components/BiAnalystChat";
 import DataPreview from "@/components/DataPreview";
+import { API_BASE_URL } from "@/lib/api";
 import InsightsFeed from "@/components/InsightsFeed";
 import WhatIfSimulator from "@/components/WhatIfSimulator";
 
@@ -40,7 +41,7 @@ export default function DashboardPage({ params }: PageProps) {
 
   const fetchReport = async () => {
     try {
-      const res = await fetch(`http://localhost:8000/api/datasets/${id}/report`);
+      const res = await fetch(`${API_BASE_URL}/api/datasets/${id}/report`);
       if (!res.ok) throw new Error("Failed to load dataset quality report");
       const json = await res.json();
       if (json.status && json.status !== "completed") {

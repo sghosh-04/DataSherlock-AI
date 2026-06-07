@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { UploadCloud, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { API_BASE_URL } from "@/lib/api";
 
 interface FileUploadProps {
   onUploadSuccess: (datasetId: string) => void;
@@ -40,7 +41,7 @@ export default function FileUpload({ onUploadSuccess }: FileUploadProps) {
     formData.append("file", selectedFile);
 
     try {
-      const res = await fetch("http://localhost:8000/api/datasets/upload", {
+      const res = await fetch(`${API_BASE_URL}/api/datasets/upload`, {
         method: "POST",
         body: formData,
       });

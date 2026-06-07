@@ -20,6 +20,7 @@ import {
   TrendingUp,
   FileSpreadsheet
 } from "lucide-react";
+import { API_BASE_URL } from "@/lib/api";
 
 interface AuditIssue {
   row: number;
@@ -133,7 +134,7 @@ export default function DataCleaningTab({ datasetId, columns, onCleanApplied }: 
     setLoadingAudit(true);
     setBackendError("");
     try {
-      const res = await fetch(`http://localhost:8000/api/datasets/${datasetId}/audit`);
+      const res = await fetch(`${API_BASE_URL}/api/datasets/${datasetId}/audit`);
       if (!res.ok) throw new Error("Failed to run data audit");
       const json = await res.json();
       setIssues(json.issues || []);
@@ -151,7 +152,7 @@ export default function DataCleaningTab({ datasetId, columns, onCleanApplied }: 
   const handleDuplicateSearch = async () => {
     setSearchingDuplicates(true);
     try {
-      const res = await fetch(`http://localhost:8000/api/datasets/${datasetId}/duplicates`, {
+      const res = await fetch(`${API_BASE_URL}/api/datasets/${datasetId}/duplicates`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key_columns: selectedKeys })
@@ -238,7 +239,7 @@ export default function DataCleaningTab({ datasetId, columns, onCleanApplied }: 
     setPreviews([]);
     setLoadingPreview(true);
     try {
-      const res = await fetch(`http://localhost:8000/api/datasets/${datasetId}/clean/preview`, {
+      const res = await fetch(`${API_BASE_URL}/api/datasets/${datasetId}/clean/preview`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ operations })
@@ -269,7 +270,7 @@ export default function DataCleaningTab({ datasetId, columns, onCleanApplied }: 
     setSummaryLogs([]);
     setShowSummary(false);
     try {
-      const res = await fetch(`http://localhost:8000/api/datasets/${datasetId}/clean/apply`, {
+      const res = await fetch(`${API_BASE_URL}/api/datasets/${datasetId}/clean/apply`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ operations })

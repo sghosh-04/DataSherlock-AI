@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Loader2, Table } from "lucide-react";
+import { API_BASE_URL } from "@/lib/api";
 
 interface DataPreviewProps {
   datasetId: string;
@@ -15,7 +16,7 @@ export default function DataPreview({ datasetId }: DataPreviewProps) {
   useEffect(() => {
     async function fetchPreview() {
       try {
-        const res = await fetch(`http://localhost:8000/api/datasets/${datasetId}/preview`);
+        const res = await fetch(`${API_BASE_URL}/api/datasets/${datasetId}/preview`);
         if (!res.ok) throw new Error("Could not load dataset preview");
         const json = await res.json();
         setData(json);

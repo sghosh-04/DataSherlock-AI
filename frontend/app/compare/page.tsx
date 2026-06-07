@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, GitCompare, Sparkles, TrendingUp, TrendingDown, ArrowRightLeft, Database } from "lucide-react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import Sidebar from "@/components/Sidebar";
+import { API_BASE_URL } from "@/lib/api";
 
 interface Dataset {
   id: string;
@@ -26,7 +27,7 @@ export default function ComparePage() {
   useEffect(() => {
     async function loadDatasets() {
       try {
-        const res = await fetch("http://localhost:8000/api/datasets");
+        const res = await fetch(`${API_BASE_URL}/api/datasets`);
         if (res.ok) {
           const json = await res.json();
           setDatasets(json.filter((d: any) => d.status === "completed"));
@@ -53,7 +54,7 @@ export default function ComparePage() {
     setComparison(null);
 
     try {
-      const res = await fetch(`http://localhost:8000/api/datasets/compare/${idA}/${idB}`);
+      const res = await fetch(`${API_BASE_URL}/api/datasets/compare/${idA}/${idB}`);
       if (!res.ok) throw new Error("Comparison calculation failed");
       const json = await res.json();
       

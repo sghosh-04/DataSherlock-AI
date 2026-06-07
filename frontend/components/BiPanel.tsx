@@ -15,6 +15,7 @@ import {
   Cell 
 } from "recharts";
 import { Sliders, Sparkles, Loader2 } from "lucide-react";
+import { API_BASE_URL } from "@/lib/api";
 
 interface Widget {
   id: string;
@@ -49,7 +50,7 @@ export default function BiPanel({ datasetId, initialWidgets }: BiPanelProps) {
     setError("");
 
     try {
-      const res = await fetch(`http://localhost:8000/api/datasets/${datasetId}/dashboard/edit`, {
+      const res = await fetch(`${API_BASE_URL}/api/datasets/${datasetId}/dashboard/edit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

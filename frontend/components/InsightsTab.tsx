@@ -14,6 +14,7 @@ import {
   Percent
 } from "lucide-react";
 import BiPanel from "@/components/BiPanel";
+import { API_BASE_URL } from "@/lib/api";
 
 interface InsightsTabProps {
   datasetId: string;
@@ -52,7 +53,7 @@ export default function InsightsTab({ datasetId, columns, dashboardConfig }: Ins
     }
 
     try {
-      const res = await fetch(`http://localhost:8000/api/datasets/${datasetId}/sql`, {
+      const res = await fetch(`${API_BASE_URL}/api/datasets/${datasetId}/sql`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: sql })

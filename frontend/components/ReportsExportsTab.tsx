@@ -13,6 +13,7 @@ import {
   TrendingUp,
   Percent
 } from "lucide-react";
+import { API_BASE_URL } from "@/lib/api";
 
 interface ReportsExportsTabProps {
   datasetId: string;
@@ -40,7 +41,7 @@ export default function ReportsExportsTab({ datasetId, datasetName, scores, stor
   const downloadCleanCsv = async () => {
     setDownloadingCsv(true);
     try {
-      window.open(`http://localhost:8000/api/datasets/${datasetId}/export/clean`, "_blank");
+      window.open(`${API_BASE_URL}/api/datasets/${datasetId}/export/clean`, "_blank");
     } catch (err) {
       console.error(err);
     } finally {
@@ -51,7 +52,7 @@ export default function ReportsExportsTab({ datasetId, datasetName, scores, stor
   const downloadExecutiveDoc = async () => {
     setDownloadingDoc(true);
     try {
-      window.open(`http://localhost:8000/api/datasets/${datasetId}/export?format=markdown`, "_blank");
+      window.open(`${API_BASE_URL}/api/datasets/${datasetId}/export?format=markdown`, "_blank");
     } catch (err) {
       console.error(err);
     } finally {
@@ -62,7 +63,7 @@ export default function ReportsExportsTab({ datasetId, datasetName, scores, stor
   const downloadPptxOutline = async () => {
     setDownloadingPptx(true);
     try {
-      window.open(`http://localhost:8000/api/datasets/${datasetId}/export/pptx`, "_blank");
+      window.open(`${API_BASE_URL}/api/datasets/${datasetId}/export/pptx`, "_blank");
     } catch (err) {
       console.error(err);
     } finally {

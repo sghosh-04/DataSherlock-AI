@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { HelpCircle, Send, Loader2, Bot, User } from "lucide-react";
+import { API_BASE_URL } from "@/lib/api";
 
 interface Message {
   sender: "user" | "bot";
@@ -52,7 +53,7 @@ export default function HealthCopilot({ datasetId }: HealthCopilotProps) {
         content: m.text
       }));
 
-      const res = await fetch(`http://localhost:8000/api/copilot/${datasetId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/copilot/${datasetId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
